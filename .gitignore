@@ -1,0 +1,7 @@
+# Local preview captures
+portfolio*.png
+
+# Local tooling
+.DS_Store
+Thumbs.db
+node_modules/
