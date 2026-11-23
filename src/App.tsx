@@ -106,7 +106,8 @@ function Hero() {
       <h1 id="hero-title" className="hero-headline"><span>&lt;</span> ML <br /><em>ENGINEER</em><span>/&gt;</span></h1>
       <div className="hero-meta top">©2026</div>
       <div className="hero-meta bottom">{`{ /AI + ML/ }`}</div>
-      <div className="hero-card" aria-label="Abstract artificial intelligence and machine learning artwork">
+      <div className="hero-card" aria-label="Portrait of Devasurya M">
+        <img className="portrait-image" src={`${import.meta.env.BASE_URL}images/devasurya-portrait.png`} alt="Devasurya M" />
         <div className="portrait-scan" />
         <Code2 className="portrait-mark" size={64} strokeWidth={1.25} />
         <div className="portrait-copy"><span>Kerala, India</span><strong>learning<br />by building</strong></div>
