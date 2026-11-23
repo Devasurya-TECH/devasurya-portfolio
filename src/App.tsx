@@ -205,46 +205,8 @@ function Contact() {
   </section>
 }
 
-const crowdPeople = [
-  ['short', 'curly', 'light'], ['tall', 'cap', 'dark'], ['mid', 'bob', 'light'], ['tall', 'wavy', 'dark'],
-  ['short', 'bun', 'light'], ['mid', 'straight', 'dark'], ['tall', 'curly', 'light'], ['mid', 'cap', 'dark'],
-  ['short', 'wavy', 'dark'], ['tall', 'bob', 'light'], ['mid', 'bun', 'dark'], ['short', 'straight', 'light'],
-] as const
-
-function CrowdPerson({ person, foreground, index }: { person: readonly string[]; foreground: boolean; index: number }) {
-  const [height, hair, outfit] = person
-  return <div className={`crowd-person ${height} ${hair} ${outfit} ${foreground ? 'foreground-person' : 'background-person'}`} style={{ '--delay': `${index * -0.9}s` } as React.CSSProperties} aria-hidden="true">
-    <i className="person-hair" /><i className="person-head" /><i className="person-neck" /><i className="person-body" /><i className="person-arm arm-left" /><i className="person-arm arm-right" /><i className="person-bag" />
-  </div>
-}
-
-function CrowdFooter() {
-  const [paused, setPaused] = useState(false)
-  const toggleCrowd = () => setPaused((value) => !value)
-  return <section className={`crowd-footer ${paused ? 'is-paused' : ''}`} aria-label="Devasurya’s animated crowd footer">
-    <div className="crowd-top">
-      <div><div className="crowd-word">Deva.</div><p>Aspiring ML Engineer<br />& AI Developer.</p></div>
-      <div className="crowd-nav"><span>Explore</span><a href="#about">About</a><a href="#skills">Skills</a><a href="#work">Work</a><a href="#learning-map">Learning</a><a href="#contact">Contact</a></div>
-      <div className="crowd-contact"><span>Get in touch</span><a href="https://github.com/Devasurya-TECH" target="_blank" rel="noreferrer">github.com/Devasurya-TECH <ArrowUpRight size={15} /></a><small>© 2026 Devasurya M</small></div>
-      <a className="crowd-back" href="#about">Back to top <ArrowUpRight size={15} /></a>
-    </div>
-    <button className="crowd-scene" type="button" onClick={toggleCrowd} aria-pressed={paused} aria-label={paused ? 'Resume crowd animation' : 'Pause crowd animation'}>
-      <span className="crowd-name" aria-hidden="true">DEVA.</span>
-      <div className="crowd-track crowd-track-back">
-        {[...crowdPeople, ...crowdPeople].map((person, index) => <CrowdPerson key={`back-${index}`} person={person} foreground={false} index={index} />)}
-      </div>
-      <div className="deva-character"><div className="deva-photo-frame"><img src={`${import.meta.env.BASE_URL}images/devasurya-portrait.png`} alt="Devasurya M" /></div><i className="deva-body" /><i className="deva-leg left" /><i className="deva-leg right" /><i className="deva-shoe left" /><i className="deva-shoe right" /></div>
-      <div className="crowd-track crowd-track-front">
-        {[...crowdPeople.slice().reverse(), ...crowdPeople.slice().reverse()].map((person, index) => <CrowdPerson key={`front-${index}`} person={person} foreground index={index} />)}
-      </div>
-      <span className="crowd-hint">{paused ? 'Paused · click to resume' : 'Click the crowd to pause'}</span>
-    </button>
-    <div className="crowd-caption"><span>Finally, some motion on my website.</span><span aria-hidden="true">{paused ? 'PLAY' : 'PAUSE'} · 01</span></div>
-  </section>
-}
-
 function Footer() {
-  return <footer><CrowdFooter /></footer>
+  return <footer className="footer"><div><div className="footer-word">Devaah.</div><p>Aspiring ML Engineer<br />& AI Developer.</p></div><div className="footer-nav"><span>Explore</span><a href="#about">About</a><a href="#skills">Skills</a><a href="#work">Work</a><a href="#learning-map">Learning</a><a href="#contact">Contact</a></div><div className="footer-bottom"><span>© 2026 Devasurya M · Kerala, India</span><a href="#about">Back to top <ArrowUpRight size={15} /></a></div></footer>
 }
 
 export default function App() {
