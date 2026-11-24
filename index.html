@@ -2,10 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f7f4f0" />
-    <meta name="description" content="Devasurya M (Deva) — aspiring Machine Learning Engineer and AI Developer from Kerala, India." />
+    <meta name="description" content="Devasurya M (Devaah) — aspiring ML Engineer & AI Developer from Kochi, Kerala. Projects in predictive analytics, deep-learning OCR and full-stack ML apps." />
+    <meta property="og:title" content="Devasurya M | Aspiring ML Engineer" />
+    <meta property="og:description" content="Aspiring ML Engineer & AI Developer from Kochi — ML, deep learning and full-stack projects." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://devasurya-tech.github.io/devasurya-portfolio/images/devasurya-portrait.png" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141414'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='%23f7f4f0'%3ED.%3C/text%3E%3C/svg%3E" />
     <title>Devasurya M | Aspiring ML Engineer</title>
+    <script>
+      // Apply the theme before first paint so there is no light/dark flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme')
+          var dark = saved === 'dark' || (saved !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          var root = document.documentElement
+          root.dataset.theme = dark ? 'dark' : 'light'
+          root.style.colorScheme = dark ? 'dark' : 'light'
+        } catch (e) {}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

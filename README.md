@@ -51,3 +51,16 @@ Then open `http://localhost:4173`.
 ---
 
 Designed and built with care by Devasurya M.
+
+## Included
+
+- Theme follows the visitor's system light/dark preference, with a System / Light / Dark switch in the menu (choice is remembered)
+- Animated hero, about section with a "currently" card, and scroll-reveal motion (respects reduced-motion)
+- Project folders that open into a detail panel (spec sheet, highlights, stack, live/source links)
+- Journey timeline plus learning map with progress
+- Contact section with email copy, social links, and a form that drafts an email to Devaah
+- Responsive desktop, tablet and phone layouts
+
+## Editing content
+
+All text, projects, skills and links live in `src/data.ts`.
