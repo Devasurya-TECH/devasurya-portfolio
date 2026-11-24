@@ -12,6 +12,9 @@ export const profile = {
   leetCode: 'https://leetcode.com/u/DEVASURYA_M/',
   instagram: 'https://www.instagram.com/devawithin/',
   reboundLabs: 'https://labsrebound.com/',
+  // Formspree form ID (the part after /f/ in your form's endpoint, e.g. 'xyzabcde').
+  // Leave empty to fall back to opening the visitor's email app.
+  formspreeId: 'mljbokzv',
 }
 
 export const interests = [

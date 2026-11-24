@@ -423,9 +423,15 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
    Footer (compact)
    ================================================================== */
 
-.footer { width: min(1100px, calc(100% - 64px)); margin-inline: auto; padding: 22px 0 28px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
-.footer a { display: inline-flex; align-items: center; gap: 5px; }
-.footer a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+/* Always the light cream footer, in both themes */
+.footer { --paper: #141414; --ink: #f7f4f0; width: 100%; padding: 70px max(32px, calc((100vw - 1100px) / 2)) 28px; background: #f7f4f0; color: #141414; border-top: 1px solid #d9d6d0; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; }
+.footer-word { font-size: clamp(70px, 12vw, 144px); font-weight: 700; letter-spacing: -.11em; line-height: .75; }
+.footer p { margin: 32px 0 0; color: color-mix(in srgb, var(--paper) 74%, transparent); line-height: 1.4; }
+.footer-nav { display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: 10px; }
+.footer-nav span { grid-column: span 2; color: color-mix(in srgb, var(--paper) 62%, transparent); font-family: var(--mono); font-size: 12px; margin-bottom: 11px; }
+.footer-nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.footer-bottom { grid-column: span 2; display: flex; justify-content: space-between; gap: 15px; border-top: 1px solid color-mix(in srgb, var(--paper) 24%, transparent); margin-top: 20px; padding-top: 20px; font-family: var(--mono); font-size: 11px; color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.footer-bottom a { display: flex; gap: 5px; align-items: center; }
 
 /* ==================================================================
    Tablet
@@ -457,6 +463,8 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
   .learning-head { flex-direction: column; }
   .learning-head { align-items: flex-start; }
   .contact { grid-template-columns: 1fr; gap: 50px; padding: 80px 0 90px; }
+  .footer { padding: 50px 20px 24px; grid-template-columns: 1.2fr 1fr; gap: 40px; }
+  .footer-bottom { margin-top: 0; }
 }
 
 /* ==================================================================
@@ -464,7 +472,7 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
    ================================================================== */
 
 @media (max-width: 560px) {
-  .section, .footer { width: calc(100% - 32px); }
+  .section { width: calc(100% - 32px); }
   h2 { font-size: clamp(44px, 13vw, 60px); }
   .hero { padding-top: 118px; }
   .hero-headline { font-size: clamp(50px, 17vw, 84px); }
@@ -499,6 +507,10 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
   .contact-form { padding: 22px 18px; }
   .social-list a { grid-template-columns: 1fr auto; }
   .social-list a span:nth-child(2) { display: none; }
+  .footer { grid-template-columns: 1fr; }
+  .footer-nav { grid-row: 2; }
+  .footer-bottom { grid-column: 1; grid-row: 3; flex-direction: column; }
+  .footer-word { font-size: 90px; }
 }
 
 /* Hover effects only where hover exists (avoids sticky hover on touch) */
@@ -520,3 +532,14 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
   *, *::before, *::after { transition: none !important; animation: none !important; }
   .reveal-ready [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Contact form states */
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.contact-form { position: relative; }
+.submit-button:disabled { opacity: .6; cursor: progress; transform: none; box-shadow: none; }
+.form-error { color: var(--accent); }
+.form-error a { text-decoration: underline; text-underline-offset: 3px; }
+.form-success { display: grid; justify-items: start; gap: 10px; padding: 30px 0; animation: fade-up .6s var(--ease) both; }
+.form-success-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--paper); }
+.form-success h3 { margin: 8px 0 0; font-size: 30px; letter-spacing: -1.2px; }
+.form-success p { margin: 0 0 8px; color: var(--muted); }

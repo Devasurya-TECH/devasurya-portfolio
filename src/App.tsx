@@ -478,15 +478,39 @@ function Journey() {
 
 function Contact() {
   const { copied, copy } = useCopy()
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const form = new FormData(event.currentTarget)
-    const name = String(form.get('name') || '').trim()
-    const email = String(form.get('email') || '').trim()
-    const note = String(form.get('note') || '').trim()
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const direct = Boolean(profile.formspreeId)
+
+  const draftEmail = (name: string, email: string, note: string) => {
     const subject = encodeURIComponent(`Portfolio enquiry from ${name || 'a visitor'}`)
     const body = encodeURIComponent(`${note}\n\n— ${name}\n${email}`)
     window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`
+  }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formEl = event.currentTarget
+    const form = new FormData(formEl)
+    const name = String(form.get('name') || '').trim()
+    const email = String(form.get('email') || '').trim()
+    const note = String(form.get('message') || '').trim()
+
+    if (!direct) return draftEmail(name, email, note)
+
+    setStatus('sending')
+    form.set('_subject', `Portfolio message from ${name || 'a visitor'}`)
+    try {
+      const response = await fetch(`https://formspree.io/f/${profile.formspreeId}`, {
+        method: 'POST',
+        body: form,
+        headers: { Accept: 'application/json' },
+      })
+      if (!response.ok) throw new Error(`Formspree responded ${response.status}`)
+      formEl.reset()
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -509,12 +533,33 @@ function Contact() {
           ))}
         </ul>
       </div>
-      <form onSubmit={handleSubmit} className="contact-form" data-reveal>
-        <label>Your name<input name="name" required autoComplete="name" placeholder="What should I call you?" /></label>
-        <label>Email address<input name="email" required type="email" autoComplete="email" placeholder="you@company.com" /></label>
-        <label>What do you have in mind?<textarea name="note" required rows={4} placeholder="A role, a team, or just a hello…" /></label>
-        <button className="submit-button" type="submit">Create email draft <Send size={17} /></button>
-        <small className="form-note">Opens your email app with the message ready to send.</small>
+      <form onSubmit={handleSubmit} className="contact-form" data-reveal aria-busy={status === 'sending'}>
+        {status === 'sent' ? (
+          <div className="form-success" role="status">
+            <span className="form-success-icon"><Check size={22} /></span>
+            <h3>Message sent.</h3>
+            <p>Thanks for reaching out — I’ll get back to you soon.</p>
+            <button type="button" className="under-link" onClick={() => setStatus('idle')}>Send another <ArrowUpRight size={15} /></button>
+          </div>
+        ) : (
+          <>
+            <label>Your name<input name="name" required autoComplete="name" placeholder="What should I call you?" /></label>
+            <label>Email address<input name="email" required type="email" autoComplete="email" placeholder="you@company.com" /></label>
+            <label>What do you have in mind?<textarea name="message" required rows={4} placeholder="An idea, a question, or just a hello…" /></label>
+            {/* Spam trap: hidden from people, bots fill it in and Formspree drops the message. */}
+            <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="honeypot" aria-hidden="true" />
+            <button className="submit-button" type="submit" disabled={status === 'sending'}>
+              {direct ? (status === 'sending' ? 'Sending…' : 'Send message') : 'Create email draft'} <Send size={17} />
+            </button>
+            {status === 'error' ? (
+              <small className="form-note form-error" role="alert">
+                Couldn’t send right now. Please email me at <a href={`mailto:${profile.email}`}>{profile.email}</a>.
+              </small>
+            ) : (
+              <small className="form-note">{direct ? 'Goes straight to my inbox.' : 'Opens your email app with the message ready to send.'}</small>
+            )}
+          </>
+        )}
       </form>
     </section>
   )
@@ -523,8 +568,22 @@ function Contact() {
 function Footer() {
   return (
     <footer className="footer">
-      <span>© 2026 {profile.name}</span>
-      <a href="#top">Back to top <ArrowUpRight size={14} /></a>
+      <div>
+        <div className="footer-word">Devaah.</div>
+        <p>Aspiring ML Engineer<br />& AI Developer.</p>
+      </div>
+      <nav className="footer-nav" aria-label="Footer">
+        <span>Explore</span>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Work</a>
+        <a href="#journey">Learning</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div className="footer-bottom">
+        <span>© 2026 {profile.name} · Kerala, India</span>
+        <a href="#top">Back to top <ArrowUpRight size={15} /></a>
+      </div>
     </footer>
   )
 }
