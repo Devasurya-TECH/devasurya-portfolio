@@ -76,7 +76,8 @@ function useReveal() {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-in')
+          // A data attribute, not a class: React rewrites className on re-render and would wipe it.
+          (entry.target as HTMLElement).dataset.revealed = 'true'
           observer.unobserve(entry.target)
         }
       }),
