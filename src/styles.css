@@ -174,11 +174,16 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
 
 .hero { position: relative; padding-top: 150px; padding-bottom: 70px; min-height: 100svh; display: flex; flex-direction: column; }
 .hero-headline {
-  position: relative; z-index: 2; margin: 0; text-align: center;
-  font-size: clamp(54px, 13.5vw, 184px); font-weight: 700; line-height: .8; letter-spacing: -.065em;
+  /* One left-aligned block, centred as a whole: "ML" and "ENGINEER" share a left edge,
+     "<" hangs into the left padding and "/>" closes the second line. */
+  position: relative; z-index: 2; margin: 0 auto; width: max-content; max-width: 100%;
+  padding-left: .4em; text-align: left;
+  font-size: clamp(54px, 13.5vw, 184px); font-weight: 700; line-height: .82; letter-spacing: -.065em;
 }
-.hero-line { display: block; white-space: nowrap; }
-.hero-line .bracket { font-family: var(--mono); font-weight: 500; font-size: .52em; letter-spacing: -.12em; vertical-align: 18%; margin: 0 .12em; }
+.hero-line { position: relative; display: block; white-space: nowrap; }
+.hero-line .bracket { font-family: var(--mono); font-weight: 500; font-size: .52em; letter-spacing: -.12em; }
+.bracket-open { position: absolute; left: -.72em; top: 50%; transform: translateY(-46%); }
+.bracket-close { display: inline-block; margin-left: .14em; vertical-align: 18%; color: var(--accent); }
 .ch { display: inline-block; animation: rise .9s var(--ease) both; animation-delay: calc(var(--i) * 45ms + 100ms); }
 @keyframes rise { from { opacity: 0; transform: translateY(.45em) rotate(4deg); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
 
@@ -475,8 +480,8 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
   .section { width: calc(100% - 32px); }
   h2 { font-size: clamp(44px, 13vw, 60px); }
   .hero { padding-top: 118px; }
-  .hero-headline { font-size: clamp(50px, 17vw, 84px); }
-  .hero-stage { grid-template-columns: 1fr 1fr; margin-top: -8px; gap: 18px 10px; }
+  .hero-headline { font-size: clamp(44px, 15vw, 80px); }
+  .hero-stage { grid-template-columns: 1fr 1fr; margin-top: 10px; gap: 18px 10px; }
   .hero-card { grid-column: 1 / -1; grid-row: 1; justify-self: center; width: min(68vw, 260px); }
   .hero-year { grid-row: 2; font-size: 22px; }
   .hero-tag { grid-row: 2; font-size: 11px; }

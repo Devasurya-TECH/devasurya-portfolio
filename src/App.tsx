@@ -223,8 +223,8 @@ function Hero() {
   return (
     <section id="top" className="hero section" aria-label="Introduction">
       <h1 className="hero-headline" aria-label="ML Engineer">
-        <span className="hero-line" aria-hidden="true"><span className="bracket">&lt;</span><Letters text="ML" start={1} /></span>
-        <span className="hero-line" aria-hidden="true"><Letters text="ENGINEER" start={3} /><span className="bracket">/&gt;</span></span>
+        <span className="hero-line" aria-hidden="true"><span className="bracket bracket-open">&lt;</span><Letters text="ML" start={1} /></span>
+        <span className="hero-line" aria-hidden="true"><Letters text="ENGINEER" start={3} /><span className="bracket bracket-close">/&gt;</span></span>
       </h1>
       <div className="hero-stage">
         <div className="hero-meta hero-year">©2026</div>
