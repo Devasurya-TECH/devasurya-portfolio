@@ -189,7 +189,7 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
 
 .hero-stage {
   display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 24px;
-  margin-top: calc(clamp(54px, 13.5vw, 184px) * -.18);
+  margin-top: clamp(16px, 2.2vw, 32px); /* sits just below the headline, never under it */
 }
 .hero-card {
   position: relative; width: clamp(190px, 27vw, 320px); aspect-ratio: 320 / 395;
