@@ -524,12 +524,10 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ticker { -webkit-mask-image: none; mask-image: none; }
-  .ticker-track { flex-wrap: wrap; width: auto; justify-content: center; gap: 6px 0; padding-inline: 16px; }
-  .ticker span { font-size: 18px; gap: 14px; padding-right: 14px; letter-spacing: -.4px; }
-  .ticker-track span:nth-child(n+10) { display: none; }
   :root { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  *:not(.ticker-track), *::before, *::after { transition: none !important; animation: none !important; }
+  /* The interests strip keeps moving, just slower; it still pauses on hover. */
+  .ticker-track { animation-duration: 70s; }
   .reveal-ready [data-reveal] { opacity: 1; transform: none; }
 }
 
