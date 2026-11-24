@@ -13,6 +13,7 @@ import {
   Sun,
   X,
 } from 'lucide-react'
+import Cursor from './Cursor'
 import { interests, profile, Project, projects, skillColumns, socials, timeline, training } from './data'
 
 /* ------------------------------------------------------------------ */
@@ -228,7 +229,7 @@ function Hero() {
       </h1>
       <div className="hero-stage">
         <div className="hero-meta hero-year">©2026</div>
-        <figure className="hero-card">
+        <figure className="hero-card" data-cursor="Hi there!">
           <img className="portrait-image" src={`${import.meta.env.BASE_URL}images/devasurya-portrait.png`} alt="Portrait of Devasurya M" fetchPriority="high" />
           <div className="portrait-scan" aria-hidden="true" />
           <figcaption className="portrait-copy"><span>{profile.location}</span><strong>learning<br />by building</strong></figcaption>
@@ -330,7 +331,7 @@ function Interests() {
 function Folder({ project, open, onToggle }: { project: Project; open: boolean; onToggle: () => void }) {
   return (
     <div className={`project-wrap project-${project.accent}${open ? ' is-open' : ''}`} data-reveal>
-      <button className="folder" type="button" onClick={onToggle} aria-expanded={open} aria-controls="project-detail">
+      <button className="folder" type="button" onClick={onToggle} aria-expanded={open} aria-controls="project-detail" data-cursor={open ? 'Close' : 'Open'}>
         <span className="folder-back" aria-hidden="true" />
         <span className="folder-paper paper-1" aria-hidden="true" />
         <span className="folder-paper paper-2" aria-hidden="true"><FileCode2 size={14} /></span>
@@ -595,6 +596,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#about">Skip to content</a>
+      <Cursor />
       <Nav theme={theme} />
       <main>
         <Hero />

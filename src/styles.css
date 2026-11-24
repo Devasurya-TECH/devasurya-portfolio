@@ -530,7 +530,7 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
 
 @media (prefers-reduced-motion: reduce) {
   :root { scroll-behavior: auto; }
-  *:not(.ticker-track), *::before, *::after { transition: none !important; animation: none !important; }
+  *:not(.ticker-track, .cursor *), *::before, *::after { transition: none !important; animation: none !important; }
   /* The interests strip keeps moving, just slower; it still pauses on hover. */
   .ticker-track { animation-duration: 70s; }
   .reveal-ready [data-reveal] { opacity: 1; transform: none; }
@@ -546,3 +546,49 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
 .form-success-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--paper); }
 .form-success h3 { margin: 8px 0 0; font-size: 30px; letter-spacing: -1.2px; }
 .form-success p { margin: 0 0 8px; color: var(--muted); }
+
+/* ==================================================================
+   Custom cursor (mouse devices only; see Cursor.tsx)
+   State classes on <html>: cur-visible, cur-hover, cur-label, cur-text, cur-down
+   ================================================================== */
+
+.cursor { display: none; }
+.has-custom-cursor .cursor { display: block; }
+.has-custom-cursor, .has-custom-cursor * { cursor: none !important; }
+.has-custom-cursor input, .has-custom-cursor textarea, .has-custom-cursor [contenteditable="true"] { cursor: text !important; }
+
+.cursor-dot, .cursor-ring, .cursor-bubble {
+  position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
+  will-change: transform;
+}
+/* Outer elements only move; inner spans handle size, colour and fades. */
+.cursor-dot span, .cursor-ring span, .cursor-bubble span {
+  position: absolute; left: 0; top: 0; display: grid; place-items: center;
+  border-radius: 50%; transform: translate(-50%, -50%);
+  opacity: 0; transition: opacity .25s, width .35s var(--ease), height .35s var(--ease), background-color .3s, border-color .3s, transform .2s var(--ease);
+}
+/* Difference blending keeps the dot and ring visible on light and dark areas */
+.cursor-dot, .cursor-ring { mix-blend-mode: difference; }
+.cursor-dot span { width: 7px; height: 7px; background: #fff; }
+.cursor-ring span { width: 38px; height: 38px; border: 1.5px solid #fff; }
+
+.cur-visible .cursor-dot span, .cur-visible .cursor-ring span { opacity: 1; }
+
+/* Over links and buttons: ring swells into a soft disc, dot tucks away */
+.cur-hover .cursor-ring span { width: 64px; height: 64px; background: #fff; border-color: transparent; }
+.cur-hover .cursor-dot span { transform: translate(-50%, -50%) scale(0); }
+
+/* Labelled targets (project folders, portrait): accent bubble with text */
+.cursor-bubble span {
+  width: 0; height: 0; background: var(--accent); color: #fff;
+  font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .02em; white-space: nowrap; overflow: hidden;
+}
+.cur-visible.cur-label .cursor-bubble span { width: 84px; height: 84px; opacity: 1; }
+.cur-label .cursor-ring span, .cur-label .cursor-dot span { opacity: 0; }
+
+/* Text fields: hand back to the normal text cursor */
+.cur-text .cursor-ring span, .cur-text .cursor-dot span { opacity: 0; }
+
+/* Press feedback */
+.cur-down .cursor-ring span { transform: translate(-50%, -50%) scale(.8); }
+.cur-down .cursor-bubble span { transform: translate(-50%, -50%) scale(.9); }
