@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react'
 import Cursor from './Cursor'
+import { usePointerEffects } from './effects'
 import { interests, profile, Project, projects, skillColumns, socials, timeline, training } from './data'
 
 /* ------------------------------------------------------------------ */
@@ -229,7 +230,7 @@ function Hero() {
       </h1>
       <div className="hero-stage">
         <div className="hero-meta hero-year">©2026</div>
-        <figure className="hero-card" data-cursor="Hi there!">
+        <figure className="hero-card" data-cursor="Hi there!" data-tilt>
           <img className="portrait-image" src={`${import.meta.env.BASE_URL}images/devasurya-portrait.png`} alt="Portrait of Devasurya M" fetchPriority="high" />
           <div className="portrait-scan" aria-hidden="true" />
           <figcaption className="portrait-copy"><span>{profile.location}</span><strong>learning<br />by building</strong></figcaption>
@@ -249,9 +250,10 @@ function About() {
   return (
     <section id="about" className="section about" aria-labelledby="about-title">
       <div className="about-copy" data-reveal>
+        <span className="section-index">01 / About</span>
         <h2 id="about-title">Hi, I’m<br />Devaah.</h2>
         <p className="about-role">Aspiring ML Engineer<br />& AI Developer.</p>
-        <div className="now-card">
+        <div className="now-card" data-spot>
           <span className="now-dot" aria-hidden="true" />
           <small>Currently</small>
           <div className="now-row">
@@ -272,7 +274,7 @@ function About() {
           <div><dt>Week AI/ML program</dt><dd>52</dd></div>
         </dl>
         <div className="about-actions">
-          <a className="solid-link" href="#work">Explore projects <ArrowDownRight size={18} /></a>
+          <a className="solid-link" href="#work" data-magnetic="0.35">Explore projects <ArrowDownRight size={18} /></a>
           <a className="under-link" href="#contact">Get in touch <ArrowUpRight size={16} /></a>
         </div>
       </div>
@@ -292,7 +294,7 @@ function Skills() {
   return (
     <section id="skills" className="section skills" aria-labelledby="skills-title">
       <div className="section-heading" data-reveal>
-        <h2 id="skills-title">Tech<br />Stack</h2>
+        <div><span className="section-index">02 / Tech stack</span><h2 id="skills-title">Tech<br />Stack</h2></div>
         <p>The tools behind<br />my work.</p>
       </div>
       <div className="skill-grid">
@@ -335,7 +337,7 @@ function Folder({ project, open, onToggle }: { project: Project; open: boolean; 
         <span className="folder-back" aria-hidden="true" />
         <span className="folder-paper paper-1" aria-hidden="true" />
         <span className="folder-paper paper-2" aria-hidden="true"><FileCode2 size={14} /></span>
-        <span className="folder-front">
+        <span className="folder-front" data-spot>
           <span className="folder-title">{project.title}</span>
           <span className="folder-arrow" aria-hidden="true">{open ? <X size={17} /> : <ArrowUpRight size={17} />}</span>
         </span>
@@ -387,7 +389,7 @@ function ProjectDetail({ project, onClose }: { project: Project; onClose: () => 
             {project.links.map((link) => {
               const external = link.href.startsWith('http')
               return (
-                <a key={link.href} className="pill-link" href={link.href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
+                <a key={link.href} className="pill-link" data-magnetic="0.3" href={link.href} target={external ? '_blank' : undefined} rel={external ? 'noreferrer' : undefined}>
                   {link.label} <ArrowUpRight size={15} />
                 </a>
               )
@@ -413,7 +415,7 @@ function Work() {
   return (
     <section id="work" className="section work" aria-labelledby="work-title">
       <div className="work-title-row" data-reveal>
-        <h2 id="work-title">Featured<br />Projects</h2>
+        <div><span className="section-index">03 / Projects</span><h2 id="work-title">Featured<br />Projects</h2></div>
         <a className="under-link" href={profile.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={16} /></a>
       </div>
       <p className="work-lede" data-reveal>Machine learning, deep learning and full-stack builds. Open a folder to see how each one works.</p>
@@ -435,7 +437,7 @@ function Journey() {
   return (
     <section id="journey" className="section journey" aria-labelledby="journey-title">
       <div className="section-heading" data-reveal>
-        <h2 id="journey-title">Experience.</h2>
+        <div><span className="section-index">04 / Experience</span><h2 id="journey-title">Experience.</h2></div>
         <p>Leading builds today.<br />Training for what’s next.</p>
       </div>
 
@@ -464,7 +466,7 @@ function Journey() {
       </div>
       <div className="map-grid" data-reveal>
         {training.modules.map(([number, title, detail]) => (
-          <article className="map-card" key={number}>
+          <article className="map-card" key={number} data-spot>
             <span className="map-number">{number}</span>
             <div><h4>{title}</h4><p>{detail}</p></div>
           </article>
@@ -477,6 +479,16 @@ function Journey() {
 /* ------------------------------------------------------------------ */
 /* Contact                                                             */
 /* ------------------------------------------------------------------ */
+
+function LocalTime() {
+  const format = () => new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true }).format(new Date())
+  const [time, setTime] = useState(format)
+  useEffect(() => {
+    const id = window.setInterval(() => setTime(format()), 15000)
+    return () => window.clearInterval(id)
+  }, [])
+  return <p className="local-time"><span className="now-dot" aria-hidden="true" />Kochi, India · <time>{time.toUpperCase()}</time> IST</p>
+}
 
 function Contact() {
   const { copied, copy } = useCopy()
@@ -518,6 +530,7 @@ function Contact() {
   return (
     <section id="contact" className="section contact" aria-labelledby="contact-title">
       <div className="contact-intro" data-reveal>
+        <span className="section-index">05 / Contact</span>
         <h2 id="contact-title">Let’s talk<br />about <i>AI.</i></h2>
         <p>Want to talk machine learning, swap ideas, or build something together? My inbox is open.</p>
         <div className="email-row">
@@ -527,6 +540,7 @@ function Contact() {
           </button>
           <span className="copy-toast" role="status">{copied === 'email' ? 'Copied' : ''}</span>
         </div>
+        <LocalTime />
         <ul className="social-list">
           {socials.map((s) => (
             <li key={s.label}>
@@ -535,7 +549,7 @@ function Contact() {
           ))}
         </ul>
       </div>
-      <form onSubmit={handleSubmit} className="contact-form" data-reveal aria-busy={status === 'sending'}>
+      <form onSubmit={handleSubmit} className="contact-form" data-spot data-reveal aria-busy={status === 'sending'}>
         {status === 'sent' ? (
           <div className="form-success" role="status">
             <span className="form-success-icon"><Check size={22} /></span>
@@ -550,7 +564,7 @@ function Contact() {
             <label>What do you have in mind?<textarea name="message" required rows={4} placeholder="An idea, a question, or just a hello…" /></label>
             {/* Spam trap: hidden from people, bots fill it in and Formspree drops the message. */}
             <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="honeypot" aria-hidden="true" />
-            <button className="submit-button" type="submit" disabled={status === 'sending'}>
+            <button className="submit-button" type="submit" data-magnetic="0.3" disabled={status === 'sending'}>
               {direct ? (status === 'sending' ? 'Sending…' : 'Send message') : 'Create email draft'} <Send size={17} />
             </button>
             {status === 'error' ? (
@@ -593,6 +607,7 @@ function Footer() {
 export default function App() {
   const theme = useTheme()
   useReveal()
+  usePointerEffects()
   return (
     <>
       <a className="skip-link" href="#about">Skip to content</a>
