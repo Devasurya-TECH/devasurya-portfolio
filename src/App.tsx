@@ -278,7 +278,7 @@ function About() {
           <a className="under-link" href="#contact">Get in touch <ArrowUpRight size={16} /></a>
         </div>
       </div>
-      <figure className="about-photo" data-reveal>
+      <figure className="about-photo" data-reveal data-tilt data-cursor="That’s me">
         <img src={`${import.meta.env.BASE_URL}images/devasurya-portrait.png`} alt="" loading="lazy" />
         <figcaption><span>{profile.name}</span><span>Est. Kerala</span></figcaption>
       </figure>
