@@ -423,8 +423,8 @@ h2 { font-size: clamp(46px, 6.2vw, 80px); margin: 0; font-weight: 600; line-heig
    Footer (compact)
    ================================================================== */
 
-/* Always the light cream footer, in both themes */
-.footer { --paper: #141414; --ink: #f7f4f0; width: 100%; padding: 70px max(32px, calc((100vw - 1100px) / 2)) 28px; background: #f7f4f0; color: #141414; border-top: 1px solid #d9d6d0; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; }
+/* Footer inverts the theme: dark footer in light mode, cream footer in dark mode */
+.footer { width: 100%; padding: 70px max(32px, calc((100vw - 1100px) / 2)) 28px; background: var(--ink); color: var(--paper); display: grid; grid-template-columns: 1fr 1fr; gap: 70px; transition: background-color .4s var(--ease), color .4s var(--ease); }
 .footer-word { font-size: clamp(70px, 12vw, 144px); font-weight: 700; letter-spacing: -.11em; line-height: .75; }
 .footer p { margin: 32px 0 0; color: color-mix(in srgb, var(--paper) 74%, transparent); line-height: 1.4; }
 .footer-nav { display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: 10px; }
